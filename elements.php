@@ -318,16 +318,16 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 									<h5>Fit</h5>
 									<div class="box alt">
 										<div class="row gtr-50 gtr-uniform">
-											<div class="col-12"><span class="image fit"><img src="images/banner.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
+											<div class="col-12"><span class="image fit"><img src="./assets/images/banner.jpg" alt="" /></span></div>
+											<div class="col-4"><span class="image fit"><img src="./assets/images/pic01.jpg" alt="" /></span></div>
+											<div class="col-4"><span class="image fit"><img src="./assets/images/pic02.jpg" alt="" /></span></div>
+											<div class="col-4"><span class="image fit"><img src="./assets/images/pic03.jpg" alt="" /></span></div>
+											<div class="col-4"><span class="image fit"><img src="./assets/images/pic03.jpg" alt="" /></span></div>
+											<div class="col-4"><span class="image fit"><img src="./assets/images/pic02.jpg" alt="" /></span></div>
+											<div class="col-4"><span class="image fit"><img src="./assets/images/pic01.jpg" alt="" /></span></div>
+											<div class="col-4"><span class="image fit"><img src="./assets/images/pic02.jpg" alt="" /></span></div>
+											<div class="col-4"><span class="image fit"><img src="./assets/images/pic01.jpg" alt="" /></span></div>
+											<div class="col-4"><span class="image fit"><img src="./assets/images/pic03.jpg" alt="" /></span></div>
 										</div>
 									</div>
 									<h5>Left &amp; Right</h5>

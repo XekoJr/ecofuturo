@@ -51,7 +51,7 @@
 		<!-- Two -->
 		<section id="two" class="wrapper alt style2">
 			<section class="spotlight">
-				<div class="image"><img src="images/class.jpg" alt=""></div>
+				<div class="image"><img src="./assets/images/class.jpg" alt=""></div>
 				<div class="content">
 					<h2>Conteúdo educativo</h2>
 					<p>Explore artigos, vídeos e quizzes que ensinam práticas sustentáveis, como reciclagem e economia
@@ -59,7 +59,7 @@
 				</div>
 			</section>
 			<section class="spotlight">
-				<div class="image"><img src="images/pic02.jpg" alt="imagem dos jogos"></div>
+				<div class="image"><img src="./assets/images/pic02.jpg" alt="imagem dos jogos"></div>
 				<div class="content">
 					<h2>Jogos Divertidos</h2>
 					<p>Ganha pontos, desbloqueia medalhas e compete em rankings enquanto aprende sobre sustentabilidade
@@ -67,7 +67,7 @@
 				</div>
 			</section>
 			<section class="spotlight">
-				<div class="image"><img src="./images/kids.jpg" alt="crianças na floresta"></div>
+				<div class="image"><img src="./assets/images/kids.jpg" alt="crianças na floresta"></div>
 				<div class="content">
 					<h2>Eventos e Workshops</h2>
 					<p>Participe de desafios ambientais, eventos e workshops que incentivam ações coletivas para
