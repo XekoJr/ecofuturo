@@ -49,7 +49,10 @@ $objectsHTML = $recycling->generateObjectsHTML();
         <div>
             <h1 id="answer"></h1>
             <div class="game-container">
+
+                <!-- Objects -->
                 <?php echo $objectsHTML; ?>
+
                 <div class="containers">
                     <div class="container" data-type="glass"><img src="./assets/images/green.png" alt="Green Bin"></div>
                     <div class="container" data-type="paper"><img src="./assets/images/paper.png" alt="Blue Bin"></div>

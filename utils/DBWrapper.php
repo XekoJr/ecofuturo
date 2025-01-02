@@ -19,6 +19,30 @@ class DBWrapper {
     public function getDBHandler() {
         return $this->DBH;
     }
+
+    
+    public function query($sql, $params = []) {
+        try {
+            $stmt = $this->DBH->prepare($sql);
+            $stmt->execute($params);
+            return $stmt;
+        } catch (PDOException $e) {
+            die("Erro na consulta ao banco de dados: " . $e->getMessage());
+        }
+    }
+
+    public function getPDO() {
+        return $this->DBH;
+    }
+
+    public function lastInsertId() {
+        return $this->DBH->lastInsertId();
+    }
+
+    public function prepare($sql) {
+        return $this->DBH->prepare($sql);
+    }
+
 }
 
 ?>
