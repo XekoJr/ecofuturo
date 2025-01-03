@@ -44,7 +44,7 @@ session_start();
                 <img src="./assets/images/recycling-panel.png" alt="Jogo de reciclagem">
             </div>
             <div class="panel-text">
-                <h3><a style="border-bottom: none;" href="./leaderboard.php?id=1"><i class="fas fa-trophy" style="color: #FFD700;"></i></a> Sabes Reciclar?</h3>
+                <h3><a style="border-bottom: none;" href="./leaderboard.php?id=2"><i class="fas fa-trophy" style="color: #FFD700;"></i></a> Sabes Reciclar?</h3>
                 <p class="description">Aprende a separar o lixo corretamente e ajuda a salvar o planeta!
                     Este jogo vai ensinar-te a importância da reciclagem e como podes
                     contribuir para um ambiente mais limpo e sustentável.</p>
