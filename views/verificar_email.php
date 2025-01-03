@@ -1,6 +1,6 @@
 <?php
-require_once '../utils/DBWrapper.php';
-require_once '../models/user.php';
+require_once './utils/DBWrapper.php';
+require_once './models/user.php';
 
 if (isset($_POST['email'])) {
     $email = $_POST['email'];

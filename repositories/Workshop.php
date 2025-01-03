@@ -52,7 +52,7 @@ class Workshop
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function generateWorkshopsHTML()
+    public function generateWorkshopsHTML($currentUser, $userWorkshop)
     {
         $workshops = $this->getWorkshops();
         $html = '';
@@ -64,12 +64,44 @@ class Workshop
             $html .= '<p class="card-description">' . htmlspecialchars($workshop['W_SMALL_DESCRIPTION']) . '</p>';
             $html .= '<p class="card-date">' . htmlspecialchars(date('d-m-Y', strtotime($workshop['W_DATE']))) . '</p></div>';
             $html .= '<div class="button-section">';
-            $html .= '<a class="col-12 button" href="workshop-details.php?id=' . htmlspecialchars($workshop['W_ID']) . '" target="_blank">Detalhes</a>';
-            $html .= '<a class="col-12 button primary" href="workshop-register.php?id=' . htmlspecialchars($workshop['W_ID']) . '">Inscrever</a>';
+            $html .= '<a class="col-12 button" href="workshop-details.php?id=' . htmlspecialchars($workshop['W_ID']) . '">Detalhes</a>';
+            if ($currentUser['U_TYPE'] == 'User') {
+                $isSignedIn = $userWorkshop->isUserSignedInWorkshop($currentUser['U_ID'], $workshop['W_ID']);
+                $html .= '<a class="col-12 button primary ' . (($workshop['W_ACTIVE'] == 1 && !$isSignedIn) ? '' : 'disabled') . '" href="workshop-register.php?id=' . htmlspecialchars($workshop['W_ID']) . '">Inscrever</a>';
+            }
             $html .= '</div>';
             $html .= '</div>';
             $html .= '</div>';
         }
         return $html;
+    }
+
+    public function deactivateWorkshop($id)
+    {
+        $sql = "UPDATE workshop SET W_ACTIVE = 0 WHERE W_ID = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function getActiveWorkshopsByIds($ids)
+    {
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+        $sql = "SELECT W_ID FROM workshop WHERE W_ID IN ($placeholders) AND W_ACTIVE = 1";
+        $stmt = $this->db->prepare($sql);
+        foreach ($ids as $index => $id) {
+            $stmt->bindValue($index + 1, $id, PDO::PARAM_INT);
+        }
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+    }
+
+    public function getWorkshopTitleById($id)
+    {
+        $sql = "SELECT W_TITLE FROM workshop WHERE W_ID = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchColumn();
     }
 }

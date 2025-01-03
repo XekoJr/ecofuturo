@@ -1,0 +1,192 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #343a46;
+  background-image: url("");
+  background-position: center;
+  background-size: cover;
+  margin: 0;
+  padding: 20px; /* Espaçamento em todas as direções */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  box-sizing: border-box; /* Inclui o padding no cálculo do tamanho */
+}
+
+.container {
+  background-image: url("../images/fundo_jogo.jpg"); /* Imagem de fundo */
+  background-position: center;
+  background-size: cover;
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  min-height: 400px; /* Define uma altura mínima */
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
+  border-radius: 10px; /* Cantos arredondados */
+  color: white; /* Cor do texto para contraste com a imagem */
+}
+
+#question {
+  margin-top: 20px; /* Ajuste o valor conforme necessário */
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px;
+  color: #333;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  
+}
+
+h1 {
+  color: #333;
+}
+
+#quiz-container {
+  margin-top: 250px;
+}
+
+.quiz-card {
+  padding: 20px;
+}
+
+#options button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#options button:hover {
+  background-color: #ddd;
+}
+
+#options button.correct {
+  background-color: #28a745;
+  color: white;
+}
+
+#options button.incorrect {
+  background-color: #dc3545;
+  color: white;
+}
+
+.hidden {
+  display: none;
+}
+
+.btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.score-box {
+  font-size: 18px;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+#restart-btn, #next-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+#restart-btn:hover, #next-btn:hover {
+  background-color: #218838;
+}
+
+/* Estilo para a lista de respostas */
+#answers-log {
+  list-style: none; /* Remove os marcadores */
+  padding: 0;
+  margin: 20px 0;
+}
+
+/* Estilo para cada resposta errada */
+.wrong-answer {
+  background-color: #ffe6e6; /* Fundo claro para destacar erro */
+  border: 1px solid #ff4d4d; /* Borda vermelha */
+  border-radius: 5px; /* Cantos arredondados */
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Estilo para a resposta do jogador */
+.wrong-answer .player-answer {
+  color: #ff4d4d; /* Destaque em vermelho */
+  font-weight: bold;
+}
+
+/* Estilo para a resposta correta */
+.wrong-answer .correct-answer {
+  color: #28a745; /* Destaque em verde */
+  font-weight: bold;
+}
+
+/* Texto geral da pergunta */
+.wrong-answer strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+#result{
+  background-color: #f0f0f0;
+  color: #343a46;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 40px;
+  z-index: 1000;
+  text-decoration: none;
+  color: #f0f0f0; /* Cor do ícone */
+  
+}
+
+.back-button svg {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  color: #f0f0f0;
+}
+
+.back-button:hover svg {
+  transform: scale(1.1); /* Aumenta o tamanho no hover */
+  color: #f0f0f0; /* Cor no hover */
+}
+
+
+
+

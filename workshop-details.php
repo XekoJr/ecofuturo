@@ -1,13 +1,26 @@
 <?php
 require_once './utils/DBWrapper.php';
 require_once './repositories/Workshop.php';
+require_once './repositories/UserWorkshop.php';
+require_once './repositories/ManageUsers.php';
+
+session_start();
+// Check if the user is logged in
+if (isset($_COOKIE['user'])) {
+    $currentUser = json_decode($_COOKIE['user'], true);
+} else {
+    // Redirect to login page if not logged in
+    header("Location: ./views/login.php");
+    exit();
+}
+
+$workshop = new Workshop();
+$userWorkshop = new UserWorkshop();
+$manageUsers = new ManageUsers();
 
 // Initialize variables
 $workshopId = isset($_GET['id']) ? intval($_GET['id']) : null;
 $workshopDetails = null;
-
-// Create an instance of Workshop
-$workshop = new Workshop();
 
 // Fetch workshop details if ID is provided
 if ($workshopId) {
@@ -18,6 +31,8 @@ if (!$workshopDetails) {
     header('Location: 404.php');
     exit;
 }
+
+$isSignedIn = $userWorkshop->isUserSignedInWorkshop($currentUser['U_ID'], $workshopDetails['W_ID']);
 ?>
 
 <!DOCTYPE HTML>
@@ -49,13 +64,20 @@ if (!$workshopDetails) {
             <section class="wrapper style5">
                 <div class="inner">
                     <div id="actions">
-                        <div id="admin-actions" class="col-12">
-                            <a href="edit-workshop.php?workshopid=<?php echo $workshopId; ?>" class="button primary">Editar</a>
-                            <a href="validate-workshop.php?id=<?php echo $workshopId; ?>" class="button primary">Validar</a>
-                        </div>
-                        <div id="user-actions">
-                            <a href="workshop-register.php?id=<?php echo $workshopId; ?>" class="button primary">Inscrever</a>
-                        </div>
+                        <?php if ($currentUser['U_TYPE'] == 'Admin') : ?>
+                            <div id="admin-actions" class="col-12">
+                                <a href="edit-workshop.php?workshopid=<?php echo $workshopId; ?>" class="button primary">Editar</a>
+                                <a href="validate-workshop.php?id=<?php echo $workshopId; ?>" class="button primary ">Validar</a>
+                            </div>
+                        <?php else: ?>
+                            <div id="admin-actions" class="col-12">
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($currentUser['U_TYPE'] == 'User') : ?>
+                            <div id="user-actions">
+                                <a href="workshop-register.php?id=<?php echo $workshopId; ?>" class="button primary <?php echo ($workshopDetails['W_ACTIVE'] == 1 && !$isSignedIn) ? '' : 'disabled'; ?>">Inscrever</a>
+                            </div>
+                        <?php endif; ?>
                     </div>
                     <h3><?php echo date('d-m-Y', strtotime($workshopDetails['W_DATE'])); ?></h3>
                     <p><?php echo nl2br(htmlspecialchars($workshopDetails['W_DESCRIPTION'])); ?></p>

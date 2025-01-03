@@ -1,6 +1,12 @@
 <?php
+
 session_start();
-session_unset();
+$_SESSION = array();
+
 session_destroy();
-header("Location: login.php");
+
+setcookie('user', '', time() - 3600, '/');
+
+header("Location: ./index.php");
 exit();
+?>

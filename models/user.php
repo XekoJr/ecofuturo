@@ -50,13 +50,8 @@ class User {
         if ($user && password_verify($senha, $user['U_PASSWORD'])) {
             // Iniciando a sessão
             session_start();
-            
-            // Salvando informações na sessão
-            $_SESSION['user_id'] = $user['U_ID'];
-            $_SESSION['username'] = $user['U_USERNAME'];
-            $_SESSION['email'] = $user['U_EMAIL'];
     
-            return true; // Login bem-sucedido
+            return $user; // Login bem-sucedido
         }
     
         return false; // Email ou senha incorretos

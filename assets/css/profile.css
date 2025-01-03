@@ -1,0 +1,77 @@
+/* Geral */
+#profile-page{
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Estilo do formulário */
+.form-container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 30px;
+}
+
+.form-container label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.form-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Estilo da tabela */
+.table-title {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #656565;
+}
+
+.styled-table {
+    width: 100%;
+    max-width: 600px;
+    border-collapse: collapse;
+    margin: 0 auto;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.styled-table th, .styled-table td {
+    text-align: left;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.styled-table th {
+    background-color: #f4f4f9;
+    font-weight: bold;
+}
+
+.styled-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.styled-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+label {
+    color: #656565;
+}
+
+input[type="text"], input[type="email"], input[type="password"], input::placeholder {
+    color: #656565;
+}

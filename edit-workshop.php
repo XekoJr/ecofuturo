@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Create new workshop
             $workshop->createWorkshop($title, $imgsrc, $smallDescription, $description, $date);
         }
-        header('Location: workshop.php');
+        header('Location: workshops.php');
         exit;
     }
 }

@@ -1,30 +1,25 @@
 <?php
-require_once 'games/Quizz.php';
-/*session_start();
 
+require_once './games/Quizz.php';
 
-// Verificar se o usuário está logado
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
+session_start();
+// Check if the user is logged in
+if (isset($_COOKIE['user'])) {
+    $currentUser = json_decode($_COOKIE['user'], true);
+} else {
+    // Redirect to login page if not logged in
+    header("Location: ./views/login.php");
+    exit();
 }
 
+// Continuar com o carregamento do quiz
+$quiz = new Quiz();
+$questions = $quiz->getQuestions();
 
-
-// Inicializar a pontuação, se ainda não estiver definida
+// Inicializa pontuação na sessão
 if (!isset($_SESSION['score'])) {
     $_SESSION['score'] = 0;
 }
-*/
-$quiz = new Quiz();
-try {
-    // Carregar perguntas do banco de dados
-    $questions = $quiz->getQuestions();
-    $questionsJson = json_encode($questions); // Converter para JSON para o JavaScript
-} catch (Exception $e) {
-    die("Erro: " . $e->getMessage());
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -33,162 +28,194 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Interativo</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-image: url('assets/images/fundo_jogo.jpg');
-            /* Substitua pelo caminho da sua imagem */
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .quiz-container {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .quiz-question {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .quiz-options button {
-            margin-bottom: 10px;
-            width: 100%;
-        }
-
-        .btn-success {
-            background-color: #28a745 !important;
-            /* Verde */
-            color: white !important;
-        }
-
-        .btn-danger {
-            background-color: #dc3545 !important;
-            /* Vermelho */
-            color: white !important;
-        }
-
-        .btn-success:hover,
-        .btn-danger:hover {
-            opacity: 0.8;
-        }
-    </style>
+    <title>Quiz Infantil</title>
+    <link rel="stylesheet" href="assets/css/quizz.css">
 </head>
 
 <body>
-    <div class="quiz-container text-center">
-        <div id="score" class="mb-3">
-            <h2>Pontuação: <span id="score-value">0</span></h2>
+<a href="javascript:history.back()" class="back-button">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="24" fill="#0056b3" />
+        <path d="M28 36L16 24L28 12" stroke="#f0f0f0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+</a>
+    <div class="container">
+        <div id="score-display" class="score-box">
+            Pontos: <span id="current-score">0</span>
         </div>
-        <div id="quiz-content">
-            <h1 class="quiz-title mb-4">Bem-vindo ao Quiz</h1>
-            <p class="quiz-question mb-4">Carregando pergunta...</p>
-            <div class="quiz-options">
-                <button class="btn btn-primary option-btn" id="option-a">Opção A</button>
-                <button class="btn btn-primary option-btn" id="option-b">Opção B</button>
-                <button class="btn btn-primary option-btn" id="option-c">Opção C</button>
-                <button class="btn btn-primary option-btn" id="option-d">Opção D</button>
-            </div>
-
+        <div id="quiz-container" class="quiz-card">
+            <h3 id="question"></h3>
+            <div id="options"></div>
+            <button id="next-btn" class="btn hidden">Próxima Pergunta</button>
         </div>
-        <button class="btn btn-secondary mt-4 d-none" id="next-btn" onclick="nextQuestion()">Próxima Pergunta</button>
+        <div id="result" class="hidden">
+            <h2>Parabéns!</h2>
+            <p>Acertas-te <span id="score"></span> pontos de um total possível de <span id="total"></span>!</p>
+            <h3>Respostas Erradas:</h3>
+            <ul id="answers-log"></ul> <!-- Lista para respostas -->
+            <button id="restart-btn" class="btn">Reiniciar</button> <!-- Botão Restart -->
+        </div>
     </div>
-
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Perguntas carregadas do PHP
-        const questions = <?php echo $questionsJson; ?>;
+        // Inicializa variáveis globais
+        const quizData = <?= json_encode(array_map(function ($question) {
+            return [
+                'id' => $question['Q_ID'],
+                'question' => $question['Q_QUESTION'],
+                'options' => [
+                    $question['Q_OP_A'],
+                    $question['Q_OP_B'],
+                    $question['Q_OP_C'],
+                    $question['Q_OP_D']
+                ],
+                'answer' => $question['Q_CORRECT']
+            ];
+        }, $questions)); ?>;
+
         let currentQuestionIndex = 0;
+        let score = <?= $_SESSION['score']; ?>;
+        const totalQuestions = quizData.length;
+        let answersLog = []; // Inicializa o log de respostas
 
-        function loadQuestion(index) {
-            const quizContent = document.getElementById('quiz-content');
-            const questionData = questions[index];
-            quizContent.querySelector('.quiz-question').textContent = questionData.Q_QUESTION;
+        const questionEl = document.getElementById("question");
+        const optionsEl = document.getElementById("options");
+        const nextBtn = document.getElementById("next-btn");
+        const resultEl = document.getElementById("result");
+        const scoreEl = document.getElementById("score");
+        const totalEl = document.getElementById("total");
+        const currentScoreEl = document.getElementById("current-score");
 
-            const options = quizContent.querySelectorAll('.quiz-options button');
-            options[0].textContent = questionData.Q_OP_A;
-            options[0].onclick = () => selectOption(questionData.Q_OP_A, questionData.Q_ID);
-            options[1].textContent = questionData.Q_OP_B;
-            options[1].onclick = () => selectOption(questionData.Q_OP_B, questionData.Q_ID);
-            options[2].textContent = questionData.Q_OP_C;
-            options[2].onclick = () => selectOption(questionData.Q_OP_C, questionData.Q_ID);
-            options[3].textContent = questionData.Q_OP_D;
-            options[3].onclick = () => selectOption(questionData.Q_OP_D, questionData.Q_ID);
-        }
+        function loadQuestion() {
+            const current = quizData[currentQuestionIndex];
+            questionEl.textContent = current.question;
+            optionsEl.innerHTML = "";
 
-        function selectOption(selected, questionId) {
-    fetch('check_answer.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ questionId, selected })
-    })
-        .then(response => response.json())
-        .then(data => {
-            const correctOption = questions[currentQuestionIndex].Q_CORRECT;
-            const options = document.querySelectorAll('.quiz-options button');
-
-            // Itera por todas as opções e aplica estilos
-            options.forEach(option => {
-                if (option.textContent === correctOption) {
-                    option.classList.add('btn-success'); // Marca a correta como verde
-                } else if (option.textContent === selected) {
-                    option.classList.add('btn-danger'); // Marca a selecionada errada como vermelha
-                }
-                option.disabled = true; // Desativa os botões após a seleção
+            current.options.forEach(option => {
+                const button = document.createElement("button");
+                button.textContent = option;
+                button.onclick = () => selectAnswer(button, current.answer);
+                optionsEl.appendChild(button);
             });
 
-            // Mostra mensagem correspondente
-            if (data.correct) {
-                alert('Resposta correta!');
+            // Esconde o botão "Próxima Pergunta" ao carregar uma nova pergunta
+            nextBtn.classList.add("hidden");
+            nextBtn.style.display = "none";
+        }
+
+        function selectAnswer(button, correctAnswer) {
+            // Verifica se a resposta selecionada está correta
+            const isCorrect = button.textContent === correctAnswer;
+
+            // Armazena a pergunta, resposta do jogador e a correta
+            answersLog.push({
+                question: quizData[currentQuestionIndex].question,
+                playerAnswer: button.textContent,
+                correctAnswer: correctAnswer,
+                isCorrect: isCorrect
+            });
+
+            // Aplica estilo ao botão selecionado
+            if (isCorrect) {
+                button.classList.add("correct");
+                score += 5;
+                currentScoreEl.textContent = score;
             } else {
-                alert('Resposta errada! A resposta correta é: ' + correctOption);
+                button.classList.add("incorrect");
             }
 
-            // Atualiza a pontuação exibida
-            document.getElementById('score-value').textContent = data.score;
+            // Destaca a resposta correta
+            Array.from(optionsEl.children).forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === correctAnswer) {
+                    btn.classList.add("correct");
+                }
+            });
 
-            // Mostra o botão de próxima pergunta
-            document.getElementById('next-btn').classList.remove('d-none');
-        })
-        .catch(err => console.error('Erro:', err));
-}
+            // Mostra o botão "Próxima Pergunta"
+            nextBtn.classList.remove("hidden");
+            nextBtn.style.display = "inline-block";
+        }
 
-
-function nextQuestion() {
-    currentQuestionIndex++;
-    if (currentQuestionIndex < questions.length) {
-        loadQuestion(currentQuestionIndex);
-        document.getElementById('next-btn').classList.add('d-none');
-
-        // Remove classes de estilo e reativa os botões
-        const options = document.querySelectorAll('.option-btn');
-        options.forEach(option => {
-            option.classList.remove('btn-success', 'btn-danger');
-            option.disabled = false;
+        nextBtn.addEventListener("click", () => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < totalQuestions) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
         });
-    } else {
-        alert('Quiz finalizado! Sua pontuação final foi: ' + document.getElementById('score-value').textContent);
-        location.reload();
-    }
-}
+
+        function showResult() {
+            questionEl.style.display = "none";
+            optionsEl.style.display = "none";
+            nextBtn.style.display = "none";
+            resultEl.classList.remove("hidden");
+            scoreEl.textContent = score;
+            totalEl.textContent = totalQuestions * 5;
+
+            saveScoreToDatabase(score); // Enviar pontuação para o servidor
+
+            const answersLogEl = document.getElementById("answers-log");
+            answersLogEl.innerHTML = ""; // Limpa a lista
+
+            // Preenche a lista com respostas erradas
+            answersLog.forEach((log) => {
+                if (!log.isCorrect) {
+                    const listItem = document.createElement("li");
+                    listItem.classList.add("wrong-answer"); // Adiciona classe para estilizar
+                    listItem.innerHTML = `
+            <strong>Pergunta:</strong> ${log.question}<br>
+            <span class="player-answer">Resposta: ${log.playerAnswer}</span><br>
+            <span class="correct-answer">Resposta Correta: ${log.correctAnswer}</span>
+        `;
+                    answersLogEl.appendChild(listItem);
+                }
+            });
 
 
-        // Carregar a primeira pergunta ao iniciar
-        loadQuestion(currentQuestionIndex);
+            // Mensagem caso todas as respostas estejam corretas
+            if (answersLog.every(log => log.isCorrect)) {
+                answersLogEl.innerHTML = "<p>Parabéns! Acertas-te todas as perguntas.</p>";
+            }
+        }
+
+        function saveScoreToDatabase(points) {
+            fetch('savescore.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ points }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log("Pontuação salva com sucesso!");
+                    } else {
+                        console.error("Erro ao salvar pontuação:", data.message);
+                    }
+                })
+                .catch(error => console.error("Erro ao conectar ao servidor:", error));
+        }
+
+
+        const restartBtn = document.getElementById("restart-btn");
+        restartBtn.addEventListener("click", () => {
+            currentQuestionIndex = 0;
+            score = 0;
+            answersLog = []; // Limpa o log de respostas
+            currentScoreEl.textContent = score;
+
+            resultEl.classList.add("hidden");
+            questionEl.style.display = "block";
+            optionsEl.style.display = "block";
+            nextBtn.classList.add("hidden");
+            nextBtn.style.display = "none";
+
+            loadQuestion();
+        });
+
+        loadQuestion();
     </script>
 </body>
 

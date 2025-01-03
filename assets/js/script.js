@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(data => {
                         console.log('Score saved:', data);
                         setTimeout(() => {
-                            window.location.href = 'profile.php';
+                            window.location.href = 'games.php';
                         }, 3000);
                     })
                     .catch(error => console.error('Error saving score:', error));

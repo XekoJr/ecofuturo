@@ -1,24 +1,21 @@
 <?php
 require_once './games/Recycling.php';
+require_once './games/UserGame.php';
 
+session_start();
 // Check if the user is logged in
-/*
 if (isset($_COOKIE['user'])) {
     $currentUser = json_decode($_COOKIE['user'], true);
 } else {
     // Redirect to login page if not logged in
-    header("Location: login.php");
+    header("Location: ./views/login.php");
     exit();
 }
-*/
 
 if (isset($_GET['score'])) {
     $score = intval($_GET['score']);
-    /*
     $userGame = new UserGame();
     $userGame->insertUserGame($currentUser['U_ID'], 2, $score);
-    */
-
 }
 
 $recycling = new Recycling();

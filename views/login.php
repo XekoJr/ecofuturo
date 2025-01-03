@@ -14,9 +14,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $loggedInUser = $user->login($email, $senha);
 
     if ($loggedInUser) {
-        // Armazena os dados do usuário na sessão
-        $_SESSION['utilizador_id'] = $loggedInUser['U_ID'];
-        $_SESSION['username'] = $loggedInUser['U_USERNAME'];
+        // Guarda o utilizador na sessão
+        $_SESSION['user'] = $loggedInUser;
+
+        // Set user cookie
+        setcookie('user', json_encode($loggedInUser), time() + 3600, "/");
 
         // Redireciona para a página inicial
         header("Location: ../index.php");
