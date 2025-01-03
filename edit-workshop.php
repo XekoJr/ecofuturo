@@ -2,6 +2,20 @@
 require_once './utils/DBWrapper.php';
 require_once './repositories/Workshop.php';
 
+session_start();
+// Check if the user is logged in
+if (isset($_COOKIE['user'])) {
+    $currentUser = json_decode($_COOKIE['user'], true);
+    if ($currentUser['U_TYPE'] !== 'Admin') {
+        header("Location: ./views/login.php");
+        exit();
+    }
+} else {
+    // Redirect to login page if not logged in
+    header("Location: ./views/login.php");
+    exit();
+}
+
 // Initialize variables
 $workshopId = isset($_GET['workshopid']) ? intval($_GET['workshopid']) : null;
 $title = '';

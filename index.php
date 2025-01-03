@@ -34,7 +34,7 @@ session_start();
 					<li><a href="#" class="button primary">Descubra Mais</a></li>
 				</ul>
 			</div>
-			<a href="#one" class="more scrolly">Saiba Mais</a>
+			<a href="./articles.php" class="more scrolly">Saiba Mais</a>
 		</section>
 
 		<!-- One -->
@@ -65,7 +65,7 @@ session_start();
 				</div>
 			</section>
 			<section class="spotlight">
-				<div class="image"><img src="./assets/images/pic02.jpg" alt="imagem dos jogos"></div>
+				<div class="image"><img src="./assets/images/quizz-panel.png" alt="imagem dos jogos"></div>
 				<div class="content">
 					<h2>Jogos Divertidos</h2>
 					<p>Ganha pontos, desbloqueia medalhas e compete em rankings enquanto aprende sobre sustentabilidade
@@ -120,8 +120,8 @@ session_start();
 						forma divertida e acompanhar o seu progresso.</p>
 				</header>
 				<ul class="actions stacked">
-					<li><a href="#" class="button fit primary">Registar</a></li>
-					<li><a href="#" class="button fit">Saiba Mais</a></li>
+					<li><a href="./views/registo.php" class="button fit primary">Registar</a></li>
+					<li><a href="./articles.php" class="button fit">Saiba Mais</a></li>
 				</ul>
 			</div>
 		</section>

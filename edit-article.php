@@ -1,6 +1,18 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
+session_start();
+// Check if the user is logged in
+if (isset($_COOKIE['user'])) {
+    $currentUser = json_decode($_COOKIE['user'], true);
+    if ($currentUser['U_TYPE'] !== 'Admin') {
+        header("Location: ./views/login.php");
+        exit();
+    }
+} else {
+    // Redirect to login page if not logged in
+    header("Location: ./views/login.php");
+    exit();
+}
 
 require_once './utils/DBWrapper.php';
 require_once './repositories/Article.php';

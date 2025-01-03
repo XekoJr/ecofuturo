@@ -4,6 +4,8 @@ require_once './repositories/Article.php';
 
 if (isset($_COOKIE['user'])) {
     $currentUser = json_decode($_COOKIE['user'], true);
+} else {
+    $currentUser = null;
 }
 
 $article = new Article();
@@ -36,7 +38,7 @@ $articles = $article->getAllArticles();
         <!-- Main -->
         <article id="main">
             <h2 class="col-12">Artigos</h2>
-            <?php if ($currentUser['U_TYPE'] == 'Admin') : ?>
+            <?php if (isset($currentUser) && $currentUser['U_TYPE'] == 'Admin') : ?>
                 <div id="admin-actions" class="col-12" style="text-align: center;">
                     <a href="edit-article.php" class="button primary"><i class="fas fa-plus"></i></a>
                 </div>

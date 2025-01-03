@@ -11,6 +11,7 @@ if (isset($_COOKIE['user'])) {
     header("Location: ./views/login.php");
     exit();
 }
+
 $dbWrapper = new DBWrapper();
 $pdo = $dbWrapper->getDBHandler();
 $stmt = $pdo->prepare("SELECT U_USERNAME, U_EMAIL FROM user WHERE U_ID = ?");
