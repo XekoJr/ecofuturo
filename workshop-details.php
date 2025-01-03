@@ -67,7 +67,7 @@ $isSignedIn = $userWorkshop->isUserSignedInWorkshop($currentUser['U_ID'], $works
                         <?php if ($currentUser['U_TYPE'] == 'Admin') : ?>
                             <div id="admin-actions" class="col-12">
                                 <a href="edit-workshop.php?workshopid=<?php echo $workshopId; ?>" class="button primary">Editar</a>
-                                <a href="validate-workshop.php?id=<?php echo $workshopId; ?>" class="button primary ">Validar</a>
+                                <a href="validate.php?id=<?php echo $workshopId; ?>" class="button primary ">Validar</a>
                             </div>
                         <?php else: ?>
                             <div id="admin-actions" class="col-12">
