@@ -89,7 +89,7 @@ foreach ($games as $gameEntry) {
                 <div id="badge-section">
                     <?php
                     foreach ($maxPoints as $points) {
-                        if ($points['G_ID'] == 1 && $points['max_points'] == 130) {
+                        if ($points['G_ID'] == 1 && $points['max_points'] == 65) {
                             echo '<div class="badge">';
                             echo '<i class="fas fa-medal fa-3x" style="color: #FFD700"></i>';
                             echo '<span>Acertou TODAS</span>';

@@ -31,10 +31,10 @@ session_start();
 				<h2>EcoFuturo</h2>
 				<p>Educando um futuro mais verde</p>
 				<ul class="actions special">
-					<li><a href="#" class="button primary">Descubra Mais</a></li>
+					<li><a href="./articles.php" class="button primary">Descubra Mais</a></li>
 				</ul>
 			</div>
-			<a href="./articles.php" class="more scrolly">Saiba Mais</a>
+			<a href="#one" class="more scrolly">Saiba Mais</a>
 		</section>
 
 		<!-- One -->
