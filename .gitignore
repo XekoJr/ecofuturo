@@ -1,0 +1,17 @@
+# Environment
+.env
+utils/config.local.php
+
+# PHP
+vendor/
+*.log
+composer.phar
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
