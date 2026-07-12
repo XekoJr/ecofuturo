@@ -21,6 +21,7 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
+      - ./mysql-lower-case.cnf:/etc/mysql/conf.d/lower-case-table-names.cnf:ro
       - db_data:/var/lib/mysql
       - ./ecofuturo.sql:/docker-entrypoint-initdb.d/ecofuturo.sql
     healthcheck:

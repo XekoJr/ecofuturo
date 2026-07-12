@@ -48,7 +48,7 @@ session_start();
                 <p class="description">Aprende a separar o lixo corretamente e ajuda a salvar o planeta!
                     Este jogo vai ensinar-te a importância da reciclagem e como podes
                     contribuir para um ambiente mais limpo e sustentável.</p>
-                <a class="button" href="./recycling-game.php">Jogar</a>
+                <a class="button" href="./Recycling-game.php">Jogar</a>
             </div>
         </div>
 
