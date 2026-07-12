@@ -1,18 +1,20 @@
 <?php
 include_once '../utils/DBWrapper.php';
 include_once '../models/user.php';
-
+$erro = null;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Recebe os dados do formulário
     $username = $_POST['username'];
     $email = $_POST['email'];
     $senha = $_POST['senha'];
-
     $user = new User();
-    $user->register($username, $email, $senha);
-
-    header("Location: login.php");
-    exit();
+    try {
+        $user->register($username, $email, $senha);
+        header("Location: login.php");
+        exit();
+    } catch (Exception $e) {
+        $erro = $e->getMessage();
+    }
 }
 ?>
 
@@ -28,6 +30,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="login-container">
     <div class="login-form">
         <h2>Criar Conta</h2>
+
+        <?php if ($erro): ?>
+          <p style="color: red;"><?= htmlspecialchars($erro) ?></p>
+        <?php endif; ?>
+
         <form action="" method="POST" id="register-form">
             <div class="form-group">
                 <label for="username">Nome de Utilizador</label>
@@ -46,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <button type="submit" id="submit-btn">Registo</button>
         </form>
         <div class="extra-links">
-            <a href="login.php">Já tenho conta!</a>
+            <a href="login.php">Ja tenho conta!</a>
         </div>
     </div>
 </div>
