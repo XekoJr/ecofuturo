@@ -49,7 +49,7 @@ class User {
     
         if ($user && password_verify($senha, $user['U_PASSWORD'])) {
             // Iniciando a sessão
-            session_start();
+            if (session_status() === PHP_SESSION_NONE) { session_start(); }
     
             return $user; // Login bem-sucedido
         }

@@ -4,7 +4,7 @@ require_once './games/UserGame.php';
 require_once './repositories/ManageUsers.php';
 require_once './games/Game.php';
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 // Check if the user is logged in
 if (isset($_COOKIE['user'])) {
     $currentUser = json_decode($_COOKIE['user'], true);

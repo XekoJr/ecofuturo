@@ -1,5 +1,5 @@
 <?php
-session_start(); // Inicia a sessão
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 
 include_once '../utils/DBWrapper.php';
 include_once '../models/user.php';
