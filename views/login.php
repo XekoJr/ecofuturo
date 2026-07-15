@@ -6,9 +6,14 @@ include_once '../models/user.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Recebe os dados do formulário
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
+    $email = trim($_POST['email'] ?? '');
+    $senha = $_POST['senha'] ?? '';
 
+    if ($email === '' || $senha === '') {
+        $erro = "Preenche o email e a password.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $erro = "Formato de email inválido.";
+    } else {
     // Cria um objeto User e verifica o login
     $user = new User();
     $loggedInUser = $user->login($email, $senha);
@@ -27,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Caso falhe o login
         $erro = "Email ou senha incorretos!";
     }
+    }
 }
 ?>
 
@@ -41,7 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="login-container">
         <div class="login-form">
             <h2>Login</h2>
-            <?php if (isset($erro)) { echo "<p style='color: red;'>$erro</p>"; } ?>
+            <?php if (isset($erro)): ?>
+                <p class="erro"><?= htmlspecialchars($erro) ?></p>
+            <?php endif; ?>
             <form action="" method="POST">
                 <div class="form-group">
                     <label for="email">Email</label>

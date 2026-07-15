@@ -6,8 +6,7 @@ body, html {
     font-family: "Edu AU VIC WA NT Pre", cursive;
     display: flex;
     justify-content: center;
-    background: url('../images/fundo_registo.jpg') no-repeat center center fixed;
-    background-size: cover;
+    background: #1b2229;
     align-items: center;
     color: white;
 }
@@ -15,10 +14,9 @@ body, html {
 .login-container {
     width: 350px;
     padding: 20px;
-    background-color: rgba(0, 0, 0, 0.8); 
+    background-color: #2e3842;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    border: 1px solid white;
 }
 
 .login-form {
@@ -30,10 +28,7 @@ body, html {
     text-align: center;
     margin-bottom: 20px;
     font-size: 45px;
-    background: rgb(18, 212, 18);
-    background-clip: text;
-    -webkit-background-clip: text; 
-    color: transparent;
+    color: #21b2a6;
 }
 
 .form-group {
@@ -49,27 +44,32 @@ body, html {
     width: 100%;
     padding: 8px;
     box-sizing: border-box;
-    border: 2px solid #ccc;
+    border: 2px solid #3f4d59;
     border-radius: 4px;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.9);
+    color: #1b2229;
 }
 
 button {
     width: 100%;
     margin: 10px 0;
-    background-color: #5e95e7;
     color: white;
     padding: 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
-    background: rgb(18, 212, 18);
+    background: #21b2a6;
     font-size: 15px;
 }
 
 button:hover {
-    background-color: rgb(90, 224, 90);
+    background-color: #199085;
+}
+
+.erro {
+    color: #ff8a80;
+    text-align: center;
 }
 
 .extra-links {
@@ -78,7 +78,7 @@ button:hover {
 }
 
 .extra-links a {
-    color: #cccccc;
+    color: #a6e0db;
     text-decoration: none;
 }
 

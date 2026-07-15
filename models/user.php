@@ -18,7 +18,15 @@ class User {
 
     // Registrar novo usuário
     public function register($username, $email, $senha) {
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $username = trim($username);
+        $email = trim($email);
+
+        // Limites alinhados com o schema (U_USERNAME/U_EMAIL são varchar(50))
+        if ($username === '' || mb_strlen($username) > 50) {
+            throw new Exception("O nome de utilizador deve ter entre 1 e 50 caracteres.");
+        }
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($email) > 50) {
             throw new Exception("Formato de email inválido.");
         }
 
@@ -43,6 +51,7 @@ class User {
 
     // Verificar credenciais de login
     public function login($email, $senha) {
+        $email = trim($email);
         $sql = "SELECT * FROM User WHERE U_EMAIL = ?";
         $stmt = $this->db->query($sql, [$email]);
         $user = $stmt->fetch();

@@ -4,9 +4,9 @@ include_once '../models/user.php';
 $erro = null;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Recebe os dados do formulário
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
+    $username = trim($_POST['username'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $senha = $_POST['senha'] ?? '';
     $user = new User();
     try {
         $user->register($username, $email, $senha);
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <h2>Criar Conta</h2>
 
         <?php if ($erro): ?>
-          <p style="color: red;"><?= htmlspecialchars($erro) ?></p>
+          <p class="erro"><?= htmlspecialchars($erro) ?></p>
         <?php endif; ?>
 
         <form action="" method="POST" id="register-form">
